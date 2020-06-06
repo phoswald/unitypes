@@ -24,19 +24,16 @@ The power of Unitypes is based on its simplicity.
 
 ## Metamodel
 
-- Simple types
-  - Number: a decimal number, possibly fractional
-  - Text: a sequence of unicode characters
-    - ...
-  - Binary: a sequence of bytes
-- Reference type: a hierarchical path
-- Product types
-  - Object: a set of attributes and typed values
-  - Map: a set of key/value-pairs of a given type
-    - List: a Map where the all keys are integers
-- Sum types
-  - Tagged union: tag and a typed value
-- Function type
-- Type type
-
-## Syntax
+Type         | Description
+-------------|------------
+**Simple**   |
+Number       | A decimal number, optionally fractional.
+Text         | A sequence of unicode characters.
+Binary       | A sequence of bytes.
+Reference    | A hierarchical path. Each part attribute or tag name or a map key.
+**Product**  |
+Object       | A set of attributes and values. The type of the value is defined by the attribute.
+Map          | A set of key/value-pairs. All keys and all values are of the same respective types.
+List         | A map where the all keys are integers.
+**Sum**      |
+Tag          | A tag and a value. The type of the value is defined by the tag.
