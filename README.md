@@ -124,13 +124,15 @@ Other possible solutions (t.b.d):
 
 ~~~
 { attribute = tag value }
-{ attribute : tag = value }
-{ attribute tag value }
 { [key] = tag value }
-{ [key] : tag = value }
-{ [key] tag value }
 { - tag value }
+
+{ attribute : tag = value }
+{ [key] : tag = value }
 { - : tag = value }
+
+{ attribute tag value }
+{ [key] tag value }
 { - tag value }
 ~~~
 
@@ -172,10 +174,10 @@ function?(expression, expression)
 
 - How do we distinguish between an object or map literal and a code block?
   One possible solution would be to introduce an operator or keyword (e.g. `new`) for object or map literals.
-  Another possible solution would be to use the unquote operator (`#`).
+  Another possible solution would be to use the quote operator (`#`) for literals.
 - How do we distinguish between empty object and empty map?
   One possible solution would be to use specific literals such as `{}` or  `{-}` or `{[]}`. 
 - How do we distinguish between a function call and a tag literal?
-  One possible solution would be to use the unquote operator (`#`).
+  One possible solution would be to use the quote operator (`#`) for literals.
 - Should we allow text value to be unquoted (e.g. `text` instead `"text"`)?
   This would require quote and unquote operators for expressions (e.g. `# value` and `(expression)`).
