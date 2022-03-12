@@ -12,6 +12,7 @@
   (aber Exceptions können auch als syntactic sugar für Monaden angesehen werden)
 - Callbacks und Futures sind nicht wirklich wünschenswert, async / await (in JavaScript) oder 
   Goroutinen & Channels (Go) sind eleganter, da sie verschachtelten Code verhindern.
+- Emphasize readable code
 
 # Concepts
 
