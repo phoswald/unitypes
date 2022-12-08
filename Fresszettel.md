@@ -1,5 +1,55 @@
 # Fresszettel
 
+## Features
+
+- Null-safe Operators ( a?.b, a?(b), a ?? b) 
+- Named parameters & Default Parameters
+- Linux, Unix, POSIX
+  - Files
+  - Process
+    - Arguments
+    - Environment
+    - Standard input, output and error
+- Web
+  - HTML
+  - CSS
+
+## Syntax
+
+### Object Construction - Java
+
+~~~
+html(
+    body(
+       h1(“Titel”),
+       p(“Some paragraph...”)
+)
+~~~
+
+→ from j2tml HTML code generator library
+
+~~~
+new Person() {{
+    name = “Philip”;
+    age = 40;
+    setX(x);
+}}
+~~~
+
+→ usually considered an Anti-Pattern
+
+### Object Construction - ideal
+
+~~~
+Person {
+    name = “Philip”
+    age = 40
+}
+~~~
+
+Funktioniert, falls ‘=’ immer eine neue Variable definiert, wie oft das ‘val’ Keyword oder ‘:=’ in Go. Damit bleibt ‘:’ frei und kann eindeutig für Typisierung verwendet werden.
+
+
 ## Types
 
 - Root
