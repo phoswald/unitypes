@@ -162,27 +162,260 @@ function?(expression, expression)
 tag : value
 
 
-
-
 $
 @
 #
 
 
-
-
-
 name = tag[key] { }
 ~~~
 
-# Open Issues (t.b.d)
+## Entwurf vom Notizbuch
 
-- How do we distinguish between an object or map literal and a code block?
-  One possible solution would be to introduce an operator or keyword (e.g. `new`) for object or map literals.
-  Another possible solution would be to use the quote operator (`#`) for literals.
-- How do we distinguish between empty object and empty map?
-  One possible solution would be to use specific literals such as `{}` or  `{-}` or `{[]}`. 
-- How do we distinguish between a function call and a tag literal?
-  One possible solution would be to use the quote operator (`#`) for literals.
-- Should we allow text value to be unquoted (e.g. `text` instead `"text"`)?
-  This would require quote and unquote operators for expressions (e.g. `# value` and `(expression)`).
+~~~
+-1.23E-3
+
+"text"
+
+0xDEADBEEF
+
+<.field[key]:tag>
+<:tag.field:tag[key]>
+
+{ field = value, ... }
+
+[ - value, ... ]
+[ [key] = value, ... ]
+
+:tag value
+~~~
+
+~~~
+-1.23E-3
+
+"text"
+
+0xDEADBEEF
+
+</field/[key]/@tag>
+</@tag/field/@tag/[key]>
+
+{ field = value, ... }
+
+[ - value, ... ]
+[ [key] = value, ... ]
+
+@tag value
+~~~
+
+## Entwurf vom Fresszettel
+
+~~~
+123
+1.23
+1.23E5
+-1.23E-5
+~~~
+
+~~~
+"text"
+" \\ \t \r \n "
+'text'
+~~~
+
+~~~
+0x
+0xDEADBEEF
+~~~
+
+~~~
+</field/tag/field/key>
+</field/@tag/field/[key]>
+</field/@tag/field/#key>
+<.field:tag.field[key]>
+</field/:tag/field/[key]>
+@.field:tag.field[key]
+@{.field:tag.field[key]}
+${}
+~~~
+
+~~~
+{ }
+{ field = value, field = value }
+{ field value, field value }
+{ - value, - value }
+{ [key] value }
+
+[ ]
+[ - value, - value ]
+[ key = value ]
+[ value, value ]
+[ [key] = value ]
+
+tag value
+@tag value
+[tag] value
+<tag> value
+: tag = value
+~~~
+
+
+~~~
+field = value
+field = { }
+field = tag value
+field = tag { }
+- value
+- { }
+- tag value
+- tag { }
+[key] = value
+[key] = { }
+[key] = tag value
+[key] = tag { }
+~~~
+
+~~~
+( expr )
+
+flow() { stmt, stmt }
+obj { }
+# { }
+~~~
+
+~~~
+name : type = value
+name = value : type
+func ( expr, expr )
+~~~
+
+~~~
+value
+  123
+  "text"
+  0xDEADBEEF
+  <field@tag.field[key]@tag>
+  <field.@tag.field[key].@tag>
+  </field/@tag/field/[key]/@tag>        allows ‘.’ in fields/tags
+  {...}
+  [...]
+  tag value
+  @tag value                        more explicit, better?
+
+field | tag
+  ident                            allow qualified? ‘.’?
+  ("text")                        required?
+
+key
+  value
+
+object
+  { name = “Philip”, age = 43 }
+
+list
+  [ “red”, “blue”, “green” ]
+  [ - { name = “Philip” }, - { name = “Marc” } ]
+
+map
+  [ [“p1”] = person { }, [“p2”] = person { } ]
+  [ [[“p1”,“p2”]] = person { } ]
+
+set
+  [ [“v1”]={} ]
+
+tag
+  person { name = “philip” }
+  html [ 
+  head [ title “...” ]
+  body [ 
+    h1 “headline”, 
+    p [ “text”, a [ href “http://foo.com, “foo” ] ]
+    p [ 
+      span “text”
+      a { href=“http://foo.com”, children=[ span “foo” ] } 
+    ] 
+  ]
+]
+
+extension
+  {
+    labels = {
+      foo = “a” 
+      com_foo_bar = “x”
+    }
+  }
+
+type
+  person = record [ name = string, age = integer ]
+
+  animal = union [ 
+    dog = record { }
+    cat = record { }
+  ]
+
+  list = { } |
+         { head=pair, tail=list? }
+  pair = { key=value, value=value }
+
+record : map<name,any>
+labels : map<qname,any>
+~~~
+
+~~~
+"  '
+=  :  ,  ;
+()                evaluation, function application        
+{}                structure
+[]            
+<>            
+!
+#                quote            
+$                unquote
+@                key, tag, reference
+%
+&
+\                escape
+^
+_
+`
+|
+~
+
+: Json, Go, Swift, Yaml 
+= C#
+~~~
+
+## Object Construction in Programming Languages
+
+### Java
+
+~~~
+html(
+    body(
+       h1(“Titel”),
+       p(“Some paragraph...”)
+)
+~~~
+
+→ from j2tml HTML code generator library
+
+~~~
+new Person() {{
+    name = “Philip”;
+    age = 40;
+    setX(x);
+}}
+~~~
+
+→ usually considered an Anti-Pattern
+
+### ideal
+
+~~~
+Person {
+    name = “Philip”
+    age = 40
+}
+~~~
+
+Funktioniert, falls ‘=’ immer eine neue Variable definiert, wie oft das ‘val’ Keyword oder ‘:=’ in Go. Damit bleibt ‘:’ frei und kann eindeutig für Typisierung verwendet werden.
